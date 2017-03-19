@@ -1,0 +1,7 @@
+# editor
+*.swp
+*.swo
+
+node_modules/
+
+build/
