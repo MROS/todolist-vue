@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>TODO</title>
+</head>
+
+<body>
+	<div id="app">
+		<h1>待辦事項</h1>
+		<div>
+			篩選條件
+			<input type="radio" id="condAll" value="all" v-model="cond" />
+			<label for="condAll"> 全部 </label>
+			<input type="radio" id="condCompleted" value="completed" v-model="cond" />
+			<label for="condCompleted">已完成</label>
+			<input type="radio" id="condNotYet" value="notYet" v-model="cond" />
+			<label for="condNotYet">未完成</label>
+			<br />
+			<button v-on:click="killCompleted">刪除已完成事項</button>
+		</div>
+		<input type="text" placeholder="輸入新事項" v-model="newItem" v-on:keypress.enter="addItem" />
+		<ul>
+			<li v-for="(item, index) in items" v-if="visible(item)"/>
+				<input type="checkbox" name="completed" v-model="item.completed"/>
+				{{ item.text }}
+				<button v-on:click="deleteItem(index)">刪除</button>
+			</li>
+		</ul>
+	</div>
+	<script src="/build/bundle.js"></script>
+</body>
+
+</html>
