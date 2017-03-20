@@ -3,34 +3,38 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>TODO</title>
+	<link rel="stylesheet" href="/node_modules/bulma/css/bulma.css">
+	<link rel="stylesheet" href="/src/style.css">
 </head>
 
 <body>
+	<nav class="nav has-shadow">
+		<div class="nav-item">待辦事項</div>
+	</nav>
 	<div id="app">
-		<h1>待辦事項</h1>
 		<div>
-			篩選條件
+			<span>篩選條件</span>
 			<input type="radio" id="condAll" value="all" v-model="cond" />
 			<label for="condAll"> 全部 </label>
 			<input type="radio" id="condCompleted" value="completed" v-model="cond" />
-			<label for="condCompleted">已完成</label>
+			<label for="condCompleted">已完</label>
 			<input type="radio" id="condNotYet" value="notYet" v-model="cond" />
-			<label for="condNotYet">未完成</label>
+			<label for="condNotYet">未完</label>
 			<br />
-			<button v-on:click="killCompleted">刪除已完成事項</button>
+			<button class="button is-danger" v-on:click="killCompleted">刪除已完成事項</button>
 		</div>
-		<input type="text" placeholder="輸入新事項" v-model="newItem" v-on:keypress.enter="addItem" />
+		<input class="input" type="text" placeholder="輸入新事項" v-model="newItem" v-on:keypress.enter="addItem" />
 		<ul>
 			<li v-for="(item, index) in items" v-if="visible(item)"/>
 				<input type="checkbox" name="completed" v-model="item.completed"/>
-				
 				<span v-if="!item.changing" v-on:dblclick="input_mode(index)">{{ item.text }}</span>
 				<span v-else>
-					<input v-bind:ref="'input' + index" v-model="item.text"
+					<input class="input" v-bind:ref="'input' + index" v-model="item.text"
 					 v-on:keypress.enter="changeText(item)" type="text" />
 				</span>
-				<button v-on:click="deleteItem(index)">刪除</button>
+				<a class="delete" v-on:click="deleteItem(index)"></a>
 			</li>
 		</ul>
 	</div>
