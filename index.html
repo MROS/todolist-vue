@@ -24,7 +24,12 @@
 		<ul>
 			<li v-for="(item, index) in items" v-if="visible(item)"/>
 				<input type="checkbox" name="completed" v-model="item.completed"/>
-				{{ item.text }}
+				
+				<span v-if="!item.changing" v-on:dblclick="input_mode(index)">{{ item.text }}</span>
+				<span v-else>
+					<input v-bind:ref="'input' + index" v-model="item.text"
+					 v-on:keypress.enter="changeText(item)" type="text" />
+				</span>
 				<button v-on:click="deleteItem(index)">刪除</button>
 			</li>
 		</ul>

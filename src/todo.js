@@ -8,11 +8,13 @@ var app = new Vue({
 		items: [
 			{
 				text: "兜風",
-				completed: false
+				completed: false,
+				changing: false
 			},
 			{
 				text: "看漫畫",
-				completed: true
+				completed: true,
+				changing: false
 			}
 		],
 	},
@@ -21,7 +23,11 @@ var app = new Vue({
 			this.items = this.items.filter((i) => !i.completed);
 		},
 		addItem() {
-			this.items.unshift({text: this.newItem, completed: false});
+			this.items.unshift({
+				text: this.newItem,
+				completed: false,
+				changing: false
+			});
 			this.newItem = '';
 		},
 		visible(item) {
@@ -33,6 +39,16 @@ var app = new Vue({
 				case "notYet":
 					return !item.completed;
 			}
+		},
+		input_mode(index) {
+			this.items[index].changing = true;
+			this.$nextTick(function () {
+				var dom = this.$refs["input" + index][0]
+				dom.focus();
+			}.bind(this));
+		},
+		changeText(item) {
+			item.changing = false;
 		},
 		deleteItem(index) {
 			this.items.splice(index, 1);
